@@ -1,41 +1,22 @@
 # Project-1
+
 Group 4
 
-Project Title: Beatsclopedia (working title)
+Project Title: Let's Celebrate (working title)
 
-Project Description: Project will allow users to search for a band/artist and then get extensive information about the artist pulled from multiple APIs, including Music Story, Spotify, and Bands in Town. 
+Project Description: Project will allow users to search for holidays in a particular country and get recipes and local restaurants associated with that country’s cuisine.
 
-User story: As a music fan, I want to efficiently gather information about my favorite artists so I can get all available information in one place with one search.
-
-
-Music Story
-Description 
-Genres
-Artists
-Alias
-Biography
-Releases
-Albums
-Websites
-
-Spotify
-Player
-Image
-
-BandsinTown
-Upcoming Shows (Live Shows)
-
-
+User story: As a person curious about different countries, I want to experience aspects of culture such as holidays and food so I can learn more about international destinations.
 
 Wireframe or Sketch of the Design:
 
 
 Potential APIs: 
-
-MUSIC STORY:  http://developers.music-story.com/developers/artist
-SPOTIFY - https://developer.spotify.com/documentation/web-api/ 
-BANDSINTOWN - https://www.artists.bandsintown.com/support/api-installation
-
+Calendarific: https://calendarific.com/api-documentation
+The Meal DB: https://www.themealdb.com/api.php
+Zomato: https://developers.zomato.com/documentation#!/common/cuisines
+Eventbrite or Meetups
+Google GeoCharts
 
 Rough Breakdown of Tasks:
 
