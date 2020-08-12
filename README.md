@@ -10,6 +10,7 @@ User story: As a person curious about different countries, I want to experience 
 
 Wireframe or Sketch of the Design:
 
+<img src="Assets/ProjectWireFrame.png" width=600>
 
 Potential APIs: 
 Calendarific: https://calendarific.com/api-documentation
