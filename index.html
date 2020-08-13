@@ -1,108 +1,119 @@
 <!DOCTYPE html>
-<html lang="en"> 
+<html lang="en">
 
 <head>
-<title>Let's Celebrate!</title>
-<meta charset="UTF-8">
-<link rel="" href="" type="">
+    <title>Let's Celebrate!</title>
+    <meta charset="UTF-8">
+    <link rel="" href="" type="">
 </head>
 
 <body>
-<!--Project Title-->
-<div class="wrapper row1">
-  <header id="header" class="clear">
-    <div id="hgroup">
-      <h1><a href="#">Let's Celebrate!</a></h1>
-      <h2>Cuisine by Country</h2>
+
+    <!--Project Title-->
+    <div class="wrapper row1">
+        <header id="header" class="clear">
+            <div id="hgroup">
+                <h1><a href="#">Let's Celebrate!</a></h1>
+                <h2>Cuisine by Country</h2>
+            </div>
+
+            <!--Navigation Bar-->
+            <nav>
+                <ul>
+                    <li><a href="#">Recipes</a></li>
+                    <li><a href="#">Restaurants</a></li>
+                </ul>
+            </nav>
+
+        </header>
     </div>
-<!--Navigation Bar-->
-    <nav>
-      <ul>
-        <li><a href="#">Recipes</a></li>
-        <li><a href="#">Restaurants</a></li>
-      </ul>
-    </nav>
 
-  </header>
-</div>
+    <!-- First Page -->
+    <div class="wrapper row2">
+        <div id="container" class="clear">
+            <img src="assets/first.jpg" alt=""></a>
+            <section id="shout">
+                <h1>Ready to Explore?</h1>
+                <select name="countries" id="countries">
+                    <option value="UK">UK</option>
+                    <option value="USA">USA</option>
+                    <option value="France">France</option>
+                    <option value="Canada">Canada</option>
+                    <option value="Jamaica">Jamaica</option>
+                    <option value="China">China</option>
+                    <option value="Netherland">Netherland</option>
+                    <option value="Egypt">Egypt</option>
+                    <option value="Greece">Greece</option>
+                    <option value="India">India</option>
+                    <option value="Iran">Iran</option>
+                    <option value="Italy">Italy</option>
+                    <option value="Japan">Japan</option>
+                    <option value="Kenya">Kenya</option>
+                    <option value="Malaysia">Malaysia</option>
+                    <option value="Mexico">Mexico</option>
+                    <option value="Morocco">Morocco</option>
+                    <option value="Croatia">Croatia</option>
+                    <option value="Norway">Norway</option>
+                    <option value="Portugal">Portugal</option>
+                    <option value="Russia">Russia</option>
+                    <option value="Argentina">Argentina</option>
+                    <option value="Spain">Spain</option>
+                    <option value="Slovakia">Slovakia</option>
+                    <option value="Thailand">Thailand</option>
+                    <option value="Saudi Arabia">Saudi Arabia</option>
+                    <option value="Vietnam">Vietnam</option>
+                    <option value="Turkey">Turkey</option>
+                    <option value="Syria">Syria</option>
+                    <option value="Algeria">Algeria</option>
+                    <option value="Tunisia">Tunisia</option>
+                    <option value="Poland">Poland</option>
 
-<!-- First Page -->
-<div class="wrapper row2">
-  <div id="container" class="clear">
-    <img src="assets/first.jpg" alt=""></a>
-    <section id="shout">
-      <h1>Ready to Explore?</h1>
-      <select name="countries" id="countries">
-        <option value="UK">UK</option>
-        <option value="USA">USA</option>
-        <option value="France">France</option>
-        <option value="Canada">Canada</option>
-        <option value="Jamaica">Jamaica</option>
-        <option value="China">China</option>
-        <option value="Netherland">Netherland</option>
-        <option value="Egypt">Egypt</option>
-        <option value="Greece">Greece</option>
-        <option value="India">India</option>
-        <option value="Iran">Iran</option>
-        <option value="Italy">Italy</option>
-        <option value="Japan">Japan</option>
-        <option value="Kenya">Kenya</option>
-        <option value="Malaysia">Malaysia</option>
-        <option value="Mexico">Mexico</option>
-        <option value="Morocco">Morocco</option>
-        <option value="Croatia">Croatia</option>
-        <option value="Norway">Norway</option>
-        <option value="Portugal">Portugal</option>
-        <option value="Russia">Russia</option>
-        <option value="Argentina">Argentina</option>
-        <option value="Spain">Spain</option>
-        <option value="Slovakia">Slovakia</option>
-        <option value="Thailand">Thailand</option>
-        <option value="Saudi Arabia">Saudi Arabia</option>
-        <option value="Vietnam">Vietnam</option>
-        <option value="Turkey">Turkey</option>
-        <option value="Syria">Syria</option>
-        <option value="Algeria">Algeria</option>
-        <option value="Tunisia">Tunisia</option>
-        <option value="Poland">Poland</option>
+                </select>
 
-      </select>
-
-      <select name="month" id="month">
-        <option value="January">January</option>
-        <option value="February">February</option>
-        <option value="March">March</option>
-        <option value="April">April</option>
-        <option value="May">May</option>
-        <option value="June">June</option>
-        <option value="July">July</option>
-        <option value="August">August</option>
-        <option value="September">September</option>
-        <option value="October">October</option>
-        <option value="November">November</option>
-        <option value="December">December</option>
-      </select>
+                <select name="month" id="month">
+                    <option value="January">January</option>
+                    <option value="February">February</option>
+                    <option value="March">March</option>
+                    <option value="April">April</option>
+                    <option value="May">May</option>
+                    <option value="June">June</option>
+                    <option value="July">July</option>
+                    <option value="August">August</option>
+                    <option value="September">September</option>
+                    <option value="October">October</option>
+                    <option value="November">November</option>
+                    <option value="December">December</option>
+                </select>
 
 
-      <p>Find holidays in a particular country by and get recipes and local restaurants associated with that country’s cuisine.</p>
+                <p>Find holidays in a particular country by and get recipes and local restaurants associated with that
+                    country’s cuisine.</p>
 
-    </section>
+            </section>
 
-    <!-- Second Page -->
-    <div id="container" class="clear">
-      <section id="shout">
-        <h2>Cooking or Going Out?</h2>
-        <button onclick="Recipes()">Recipes</button>
-        <button onclick="Restaurants()">Restaurants</button>
-      </section>
-      
+            <!-- Second Page -->
+            <div id="container" class="clear">
+                <section id="shout">
+                    <h2>Cooking or Going Out?</h2>
+                    <button onclick="Recipes()">Recipes</button>
+                    <button onclick="Restaurants()">Restaurants</button>
+                </section>
 
-      
 
-<!-- Footer -->
-<div class="wrapper row3">
-  <footer id="footer" class="clear">
-  </footer>
-</div>
+
+
+                <!-- Footer -->
+                <div class="wrapper row3">
+                    <footer id="footer" class="clear">
+                    </footer>
+                </div>
+
+                <script src="https://code.jquery.com/jquery.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+                <script
+                    src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
+                <script src='main.js'></script>
+
 </body>
+
 </html>
