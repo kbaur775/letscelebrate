@@ -1,29 +1,30 @@
 //main script
 
 var countries = {
-    UnitedKingdom: {name: "United Kingdom", abbr: "GB", cuisine: "British"},
+    Canada: {name: "Canada", abbr: "CA", cuisine: "Canadian"},
+    China: {name: "China", abbr: "CN", cuisine: "Chinese"},
+    Egypt: {name: "Egypt", abbr: "EG", cuisine: "Egyptian"},
     France: {name: "France", abbr: "FR", cuisine: "French"},
-    Tunisia: {name: "Tunisia", abbr: "", cuisine: "Tunisian"},
+    Greece: {name: "Greece", abbr: "GR", cuisine: "Greek"},
+    India: {name: "India", abbr: "IN", cuisine: "Indian"},
+    Ireland: {name: "Ireland", abbr: "IE", cuisine: "Irish"},
+    Italy: {name: "Italy", abbr: "IT", cuisine: "Italian"},
+    Jamaica: {name: "Jamaica", abbr: "JM", cuisine: "Jamaican"},
     Japan: {name: "Japan", abbr: "JP", cuisine: "Japanese"},
-    Canada: {name: "Canada", abbr: "", cuisine: "Canadian"},
-    China: {name: "China", abbr: "", cuisine: "Chinese"},
-    Netherlands: {name: "Netherlands", abbr: "", cuisine: "Dutch"},
-    Egypt: {name: "Egypt", abbr: "", cuisine: "Egyptian"},
-    Greece: {name: "Greece", abbr: "", cuisine: "Greek"},
-    India: {name: "India", abbr: "", cuisine: "Indian"},
-    Ireland: {name: "Ireland", abbr: "", cuisine: "Irish"},
-    Italy: {name: "Italy", abbr: "", cuisine: "Italian"},
-    Jamaica: {name: "Jamaica", abbr: "", cuisine: "Jamaican"},
     Kenya: {name: "Kenya", abbr: "KE", cuisine: "Kenyan"},
     Malaysia: {name: "Malaysia", abbr: "MY", cuisine: "Malaysian"},
     Mexico: {name: "Mexico", abbr: "MX", cuisine: "Mexican"},
     Morocco: {name: "Morocco", abbr: "MA", cuisine: "Moroccan"},
+    Netherlands: {name: "Netherlands", abbr: "NL", cuisine: "Dutch"},
     Poland: {name: "Poland", abbr: "PL", cuisine: "Polish"},
     Russia: {name: "Russia", abbr: "RU", cuisine: "Russian"},
     Spain: {name: "Spain", abbr: "ES", cuisine: "Spanish"},
     Thailand: {name: "Thailand", abbr: "TH", cuisine: "Thai"},
     Tunisia: {name: "Tunisia", abbr: "TN", cuisine: "Tunisian"},
-    Turkey: {name: "Turkey", abbr: "TR", cuisine: "Turkish"}
+    Turkey: {name: "Turkey", abbr: "TR", cuisine: "Turkish"},
+    UnitedKingdom: {name: "United Kingdom", abbr: "GB", cuisine: "British"},
+    UnitedStates: {name: "United States", abbr: "US", cuisine: "American"},
+    Vietnam: {name: "Vietnam", abbr: "VN", cuisine: "Vietnamese"}
 }
 
 console.log(countries.UnitedKingdom.cuisine);
