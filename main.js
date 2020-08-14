@@ -91,6 +91,30 @@ function getRecipes() {
         method: "GET"
     }).then(function (mealResponse) {
         console.log(mealResponse);
+        var mealList = $("#recipe-list");
+        for (var i = 0; i < mealResponse.meals.length ; i++){
+            var mealName = mealResponse.meals[i].strMeal
+            var mealImageURL = mealResponse.meals[i].strMealThumb
+            var mealID = mealResponse.meals[i].idMeal
+            var cellCard = $("<div>")
+            cellCard.addClass("cell")
+            var recipeCard = $("<div>")
+            
+            recipeCard.addClass("card")
+            var mealImage = $("<img>")
+            mealImage.attr("id", mealID)
+            mealImage.attr("src", mealImageURL)
+            var recipeCardTitle = $("<h4>")
+            recipeCardTitle.text(mealName)
+            recipeCard.append(recipeCardTitle)
+            recipeCard.append(mealImage)
+            cellCard.append(recipeCard)
+            mealList.append(cellCard)
+
+            // var hOne = $("<h4>").text(mealName);
+            // mealList.append(hOne);
+
+        }
     })
 }
 
@@ -126,4 +150,9 @@ $("#searchBtn").on("click", function(event) {
     // renderHolidays();
 })
 
-getRecipes();
+$("#recipeBtn").on("click", function(event) {
+    $("#recipe-list").empty();
+    event.preventDefault();
+    getRecipes();
+})
+
