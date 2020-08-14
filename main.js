@@ -28,34 +28,59 @@ var countries = {
 }
 
 var months = {
-    January: 1,
-    Feburary: 2,
-    March: 3,
-    April: 4,
-    May: 5,
-    June: 6,
-    July: 7,
-    August: 8,
-    September: 9,
-    October: 10,
-    November: 11,
-    December: 12
+    January: "1",
+    Feburary: "2",
+    March: "3",
+    April: "4",
+    May: "5",
+    June: "6",
+    July: "7",
+    August: "8",
+    September: "9",
+    October: "10",
+    November: "11",
+    December: "12"
 }
 
-var country;
-var month;
+var country = "UnitedKingdom";
+var month = "1";
 
 //Get list of holidays corresponding to user input of country & month from Calendarific API
 function getHolidays() {
     var cAPIkey = "963eb84b09e849ae6b1ab4fa1201730ea69687c5";
-    var calendarificURL = "https://calendarific.com/api/v2/holidays?&api_key=" + cAPIkey + "&country=" + countries[country].abbr + "&year=2020&month=" + months[month];
+    var calendarificURL = "https://calendarific.com/api/v2/holidays?&api_key=" + cAPIkey + "&country=" + countries[country].abbr + "&year=2021&month=" + months[month] + "&type=national,local,religious";
 
     $.ajax({
         url: calendarificURL,
         method: "GET"
     }).then(function (calendarResponse) {
         console.log(calendarResponse);
+        //CERTAIN COUNTRIES/MONTHS DON'T HAVE HOLIDAYS IN ARRAY
+        var holidayList = $("#holiday-list");
+       console.log(calendarResponse.response.holidays.length)
+
+       if (calendarResponse.response.holidays.length === 0){
+           alert("Try a different country/month")
+       }
+       else{
+        for (var i = 0 ; i < calendarResponse.response.holidays.length ; i++){
+            var holidayName = calendarResponse.response.holidays[i].name
+            var holidayDate = calendarResponse.response.holidays[i].date.iso
+            var holidayDescrip = calendarResponse.response.holidays[i].description
+            var hOne = $("<h4>").text(holidayName);
+            var pTwo = $("<p>").text(holidayDate);
+            var pThree = $("<p>").text(holidayDescrip);
+            holidayList.append(hOne)
+            holidayList.append(pTwo)
+            holidayList.append(pThree)
+
+        }
+        //<h4> displays holiday name
+        // <p> displays date
+        // <p> displays description
+    }
     })
+    
 }
 
 //Get list of recipes corresponding to user input of country/cuisine from MealDB API
@@ -82,18 +107,23 @@ function getRestaurants() {
 //EVENT LISTENER FOR COUNTRY DROPDOWN MENU
 $("#countries").change(function() {
     country = (this.value);
+    // console.log(country);
 });
 
 //EVENT LISTENER FOR MONTH DROPDOWN MENU
 $("#month").change(function() {
     month = (this.value);
-    getHolidays();
-    getRecipes();
+    
+    // getHolidays();
+    // getRecipes();
 })
 
 //EVENT LISTENER FOR SEARCH BUTTON
 $("#searchBtn").on("click", function(event) {
+    $("#holiday-list").empty();
     event.preventDefault();
     getHolidays();
-    renderHolidays();
+    // renderHolidays();
 })
+
+getRecipes();
