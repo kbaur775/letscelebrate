@@ -1,0 +1,21 @@
+head {
+    color: #696969;
+}
+
+body {
+    background-color: lightcyan;
+    color: #696969;
+    font-family: 'Quicksand', sans-serif;
+}
+ #countries, #month {
+     width: 100px;  
+     margin-left: 15px;
+ }
+
+ #shout {
+     margin-left: 15px;
+ }
+
+ h1, h2 {
+    font-family: 'Quicksand', sans-serif;
+ }
