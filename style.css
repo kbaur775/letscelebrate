@@ -18,8 +18,19 @@ body {
 
  h1, h2 {
     font-family: 'Quicksand', sans-serif;
+ polishing
+    text-align: center;
+ }
+
+ footer {
+     background-color: darkcyan;
+     color: white;
+     text-align: right;
+     padding-right: 5px;
+
  }
 
  .card {
      width: 300px;
+ master
  }
