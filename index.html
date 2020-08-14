@@ -4,7 +4,9 @@
 <head>
     <title>Let's Celebrate!</title>
     <meta charset="UTF-8">
-    <link rel="" href="" type="">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.5.1/dist/css/foundation.min.css" integrity="sha256-1mcRjtAxlSjp6XJBgrBeeCORfBp/ppyX4tsvpQVCcpA= sha384-b5S5X654rX3Wo6z5/hnQ4GBmKuIJKMPwrJXn52ypjztlnDK2w9+9hSMBz/asy9Gw sha512-M1VveR2JGzpgWHb0elGqPTltHK3xbvu3Brgjfg4cg5ZNtyyApxw/45yHYsZ/rCVbfoO5MSZxB241wWq642jLtA==" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -18,13 +20,10 @@
             </div>
 
             <!--Navigation Bar-->
-            <nav>
-                <ul>
-                    <li><a href="#">Recipes</a></li>
-                    <li><a href="#">Restaurants</a></li>
-                </ul>
-            </nav>
-
+            <ul class="menu">
+                <li><a href="#">Recipes</a></li>
+                <li><a href="#">Restaurants</a></li>
+            </ul>
         </header>
     </div>
 
@@ -85,7 +84,9 @@
                     <option value="December">December</option>
                 </select>
 
+                <button class="hollow button" href="#">Search</button>
 
+                
                 <p>Find holidays in a particular country by and get recipes and local restaurants associated with that
                     country’s cuisine.</p>
 
@@ -95,8 +96,8 @@
             <div id="container" class="clear">
                 <section id="shout">
                     <h2>Cooking or Going Out?</h2>
-                    <button onclick="Recipes()">Recipes</button>
-                    <button onclick="Restaurants()">Restaurants</button>
+                    <button class="hollow button" href="#">Recipes</button>
+                    <button class="hollow button" href="#">Restaurants</button>
                 </section>
 
 
