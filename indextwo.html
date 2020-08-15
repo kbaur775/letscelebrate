@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+        }
+        #map {
+            height:500px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+Enter Country Name:    <input type="text" id="search">
+ <button id="searchBtn">search</button>
+<div id="map"> </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+
+$("#searchBtn").on("click",function(){
+    var search =  $("#search").val()
+     
+   var  queryUrl = "https://maps.googleapis.com/maps/api/geocode/json?address="+search+"&key=AIzaSyAgXL4y4IhyRIFEYBF9wke-Ex5X6m3sWhc"
+    console.log(queryUrl)
+    $.ajax({
+        url:queryUrl, 
+        method:"GET"
+    })
+    .then(function(response){
+        console.log(response);
+        var lat =response.results[0].geometry.location.lat
+        var lon =response.results[0].geometry.location.lng
+       console.log(lat,lon)
+        initMap(lat,lon)
+    })
+})
+
+
+    function initMap(lat,lon){
+        var location = {lat:lat, lng: lon};
+        var map = new google.maps.Map(document.getElementById("map"),{
+            zoom: 4,
+            center:location
+        });
+        var marker = new google.maps.Marker({
+            position: location,
+            map: map 
+        });
+    }
+    
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAgXL4y4IhyRIFEYBF9wke-Ex5X6m3sWhc&callback=initMap"></script>
+
+    
+</body>
+</html>
