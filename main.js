@@ -1,4 +1,9 @@
 //main script
+    var holidayDate
+    var holidayDescrip
+    var holidayName
+    var cAPIkey
+    var calendarificURL
 
 var countries = {
     Canada: { name: "Canada", abbr: "CA", cuisine: "Canadian" },
@@ -47,32 +52,30 @@ var month = "1";
 
 //Get list of holidays corresponding to user input of country & month from Calendarific API
 function getHolidays() {
-    var cAPIkey = "963eb84b09e849ae6b1ab4fa1201730ea69687c5";
-    var calendarificURL = "https://calendarific.com/api/v2/holidays?&api_key=" + cAPIkey + "&country=" + countries[country].abbr + "&year=2021&month=" + months[month] + "&type=national,local,religious";
+    cAPIkey = "963eb84b09e849ae6b1ab4fa1201730ea69687c5";
+    calendarificURL = "https://calendarific.com/api/v2/holidays?&api_key=" + cAPIkey + "&country=" + countries[country].abbr + "&year=2021&month=" + months[month] + "&type=national,local,religious";
 
     $.ajax({
         url: calendarificURL,
         method: "GET"
     }).then(function (calendarResponse) {
-        console.log(calendarResponse);
+
         //CERTAIN COUNTRIES/MONTHS DON'T HAVE HOLIDAYS IN ARRAY
         var holidayList = $("#holiday-list");
-       console.log(calendarResponse.response.holidays.length)
+       
 
        if (calendarResponse.response.holidays.length === 0){
            alert("Try a different country/month")
        }
        else{
         for (var i = 0 ; i < calendarResponse.response.holidays.length ; i++){
-            var holidayName = calendarResponse.response.holidays[i].name
-            var holidayDate = calendarResponse.response.holidays[i].date.iso
-            var holidayDescrip = calendarResponse.response.holidays[i].description
+            holidayName = calendarResponse.response.holidays[i].name
+            
             var hOne = $("<h4>").text(holidayName);
-            var pTwo = $("<p>").text(holidayDate);
-            var pThree = $("<p>").text(holidayDescrip);
+            hOne.attr("id", i)
+
             holidayList.append(hOne)
-            holidayList.append(pTwo)
-            holidayList.append(pThree)
+
 
         }
         //<h4> displays holiday name
@@ -90,7 +93,7 @@ function getRecipes() {
         url: mealURL,
         method: "GET"
     }).then(function (mealResponse) {
-        console.log(mealResponse);
+
         var mealList = $("#recipe-list");
         for (var i = 0; i < mealResponse.meals.length ; i++){
             var mealName = mealResponse.meals[i].strMeal
@@ -131,7 +134,7 @@ function getRestaurants() {
 //EVENT LISTENER FOR COUNTRY DROPDOWN MENU
 $("#countries").change(function() {
     country = (this.value);
-    // console.log(country);
+
 });
 
 //EVENT LISTENER FOR MONTH DROPDOWN MENU
@@ -154,5 +157,37 @@ $("#recipeBtn").on("click", function(event) {
     $("#recipe-list").empty();
     event.preventDefault();
     getRecipes();
+})
+
+$(document).on("click", "h4", function(event){
+    calendarificURL = "https://calendarific.com/api/v2/holidays?&api_key=" + cAPIkey + "&country=" + countries[country].abbr + "&year=2021&month=" + months[month] + "&type=national,local,religious";
+    var index = $(this).attr("id")
+
+    $.ajax({
+        url: calendarificURL,
+        method: "GET"
+    }).then(function (calendarResponse) {
+        event.preventDefault()
+        holidayName = calendarResponse.response.holidays[index].name
+        holidayDate = calendarResponse.response.holidays[index].date.iso
+        holidayDescrip = calendarResponse.response.holidays[index].description
+        
+        
+        $("#holiday-list").empty();
+        hOne = $("<h4>").text(holidayName);
+        pTwo = $("<p>").text(holidayDate);
+        pThree = $("<p>").text(holidayDescrip);
+        backButton = $("<button>").text("Go Back")
+        backButton.addClass("backBtn")
+        $("#holiday-list").append(hOne)
+        $("#holiday-list").append(pTwo)
+        $("#holiday-list").append(pThree)
+        $("#holiday-list").append(backButton)
+})
+})
+$(document).on("click", ".backBtn", function(event){
+    event.preventDefault()
+    $("#holiday-list").empty();
+    getHolidays()
 })
 
