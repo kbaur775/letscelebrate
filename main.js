@@ -72,6 +72,7 @@ function getHolidays() {
             holidayName = calendarResponse.response.holidays[i].name
             var hOne = $("<h4>").text(holidayName);
             hOne.attr("id", i)
+            hOne.attr("class", "holiday-list");
             holidayList.append(hOne)
         }
         //<h4> displays holiday name
@@ -106,9 +107,11 @@ function getRecipes() {
             mealImage.attr("src", mealImageURL)
             var recipeCardTitle = $("<h4>")
             recipeCardTitle.text(mealName)
+            recipeCardTitle.attr("class", "recipe-title")
             recipeCard.append(recipeCardTitle)
             recipeCard.append(mealImage)
             cellCard.append(recipeCard)
+            cellCard.attr("class", "recipe-box")
             mealList.append(cellCard)
 
             // var hOne = $("<h4>").text(mealName);
