@@ -4,6 +4,7 @@
     var holidayName
     var cAPIkey
     var calendarificURL
+    var mealID 
 
 var countries = {
     Canada: { name: "Canada", abbr: "CA", cuisine: "Canadian" },
@@ -63,20 +64,15 @@ function getHolidays() {
         //CERTAIN COUNTRIES/MONTHS DON'T HAVE HOLIDAYS IN ARRAY
         var holidayList = $("#holiday-list");
        
-
        if (calendarResponse.response.holidays.length === 0){
            alert("Try a different country/month")
        }
        else{
         for (var i = 0 ; i < calendarResponse.response.holidays.length ; i++){
             holidayName = calendarResponse.response.holidays[i].name
-            
             var hOne = $("<h4>").text(holidayName);
             hOne.attr("id", i)
-
             holidayList.append(hOne)
-
-
         }
         //<h4> displays holiday name
         // <p> displays date
@@ -88,6 +84,7 @@ function getHolidays() {
 
 //Get list of recipes corresponding to user input of country/cuisine from MealDB API
 function getRecipes() {
+    $("#recipe-list").empty();
     var mealURL = "https://www.themealdb.com/api/json/v1/1/filter.php?a=" + countries[country].cuisine;
     $.ajax({
         url: mealURL,
@@ -98,7 +95,7 @@ function getRecipes() {
         for (var i = 0; i < mealResponse.meals.length ; i++){
             var mealName = mealResponse.meals[i].strMeal
             var mealImageURL = mealResponse.meals[i].strMealThumb
-            var mealID = mealResponse.meals[i].idMeal
+            mealID = mealResponse.meals[i].idMeal
             var cellCard = $("<div>")
             cellCard.addClass("cell")
             var recipeCard = $("<div>")
@@ -159,10 +156,10 @@ $("#recipeBtn").on("click", function(event) {
     getRecipes();
 })
 
+//pick a holiday
 $(document).on("click", "h4", function(event){
     calendarificURL = "https://calendarific.com/api/v2/holidays?&api_key=" + cAPIkey + "&country=" + countries[country].abbr + "&year=2021&month=" + months[month] + "&type=national,local,religious";
     var index = $(this).attr("id")
-
     $.ajax({
         url: calendarificURL,
         method: "GET"
@@ -185,9 +182,130 @@ $(document).on("click", "h4", function(event){
         $("#holiday-list").append(backButton)
 })
 })
+
+//back button
 $(document).on("click", ".backBtn", function(event){
     event.preventDefault()
     $("#holiday-list").empty();
     getHolidays()
 })
 
+
+// recipe functions
+$(document).on("click", "img", function(event){
+    event.preventDefault()
+    mealID = this.id
+
+    $("#recipe-list").empty();
+    var mealURL = "https://www.themealdb.com/api/json/v1/1/lookup.php?i=" + mealID;
+    $.ajax({
+        url: mealURL,
+        method: "GET"
+    }).then(function (mealIdResponse) {
+       console.log(mealIdResponse.meals[0])
+       //measurements and ingredients in one string
+    var ingOne = $("<li>").text(mealIdResponse.meals[0].strMeasure1 + " " + mealIdResponse.meals[0].strIngredient1)
+    var ingTwo = $("<li>").text(mealIdResponse.meals[0].strMeasure2 + " " + mealIdResponse.meals[0].strIngredient2)
+    var ingThree = $("<li>").text(mealIdResponse.meals[0].strMeasure3 + " " + mealIdResponse.meals[0].strIngredient3)
+    var ingFour = $("<li>").text(mealIdResponse.meals[0].strMeasure4 + " " + mealIdResponse.meals[0].strIngredient4)
+    var ingFive = $("<li>").text(mealIdResponse.meals[0].strMeasure5 + " " + mealIdResponse.meals[0].strIngredient5)
+    var ingSix = $("<li>").text(mealIdResponse.meals[0].strMeasure6 + " " + mealIdResponse.meals[0].strIngredient6)
+    var ingSeven =$("<li>").text( mealIdResponse.meals[0].strMeasure7 + " " + mealIdResponse.meals[0].strIngredient7)
+    var ingEight = $("<li>").text(mealIdResponse.meals[0].strMeasure8 + " " + mealIdResponse.meals[0].strIngredient8)
+    var ingNine = $("<li>").text(mealIdResponse.meals[0].strMeasure9 + " " + mealIdResponse.meals[0].strIngredient9)
+    var ingTen = $("<li>").text(mealIdResponse.meals[0].strMeasure10 + " " + mealIdResponse.meals[0].strIngredient10)
+    var ingEleven = $("<li>").text(mealIdResponse.meals[0].strMeasure11 + " " + mealIdResponse.meals[0].strIngredient11)
+    var ingTwelve = $("<li>").text(mealIdResponse.meals[0].strMeasure12 + " " + mealIdResponse.meals[0].strIngredient12)
+    var ingThirteen = $("<li>").text(mealIdResponse.meals[0].strMeasure13 + " " + mealIdResponse.meals[0].strIngredient13)
+    var ingFourteen =$("<li>").text( mealIdResponse.meals[0].strMeasure14 + " " + mealIdResponse.meals[0].strIngredient14)
+    var ingFifteen = $("<li>").text(mealIdResponse.meals[0].strMeasure15 + " " + mealIdResponse.meals[0].strIngredient15)
+    var ingSixteen = $("<li>").text(mealIdResponse.meals[0].strMeasure16 + " " + mealIdResponse.meals[0].strIngredient16)
+    var ingSeventeen = $("<li>").text(mealIdResponse.meals[0].strMeasure17 + " " + mealIdResponse.meals[0].strIngredient17)
+    var ingEighteen = $("<li>").text(mealIdResponse.meals[0].strMeasure18 + " " + mealIdResponse.meals[0].strIngredient18)
+    var ingNineteen = $("<li>").text( mealIdResponse.meals[0].strMeasure19 + " " + mealIdResponse.meals[0].strIngredient19)
+    var ingTwenty = $("<li>").text(mealIdResponse.meals[0].strMeasure20 + " " + mealIdResponse.meals[0].strIngredient20)
+    var instructions = $("<p>").text(mealIdResponse.meals[0].strInstructions)
+    var mealTitle = $("<h4>").text(mealIdResponse.meals[0].strMeal)
+    var youtubeLink = mealIdResponse.meals[0].strYoutube
+    var mealThumb = mealIdResponse.meals[0].strMealThumb
+    var mealImage = $("<img>")
+    mealImage.attr("src", mealThumb)
+    mealImage.attr("id", "mealImg")
+    //recipe is displayed
+    $("#recipe").append(mealImage)
+    $("#recipe").append(mealTitle)
+    if (mealIdResponse.meals[0].strIngredient1){
+    $("#recipe").append(ingOne)
+    }
+    if (mealIdResponse.meals[0].strIngredient2){
+    $("#recipe").append(ingTwo)
+    }
+    if (mealIdResponse.meals[0].strIngredient3){
+    $("#recipe").append(ingThree)
+    }
+    if (mealIdResponse.meals[0].strIngredient4){
+    $("#recipe").append(ingFour)
+    }
+    if (mealIdResponse.meals[0].strIngredient5){
+    $("#recipe").append(ingFive)
+    }
+    if (mealIdResponse.meals[0].strIngredient6){
+    $("#recipe").append(ingSix)
+    }
+    if (mealIdResponse.meals[0].strIngredient7){
+    $("#recipe").append(ingSeven)
+    }
+    if (mealIdResponse.meals[0].strIngredient8){
+    $("#recipe").append(ingEight)
+    }
+    if (mealIdResponse.meals[0].strIngredient9){
+    $("#recipe").append(ingNine)
+    }
+    if (mealIdResponse.meals[0].strIngredient10){
+    $("#recipe").append(ingTen)
+    }
+    if (mealIdResponse.meals[0].strIngredient11){
+    $("#recipe").append(ingEleven)
+    }
+    if (mealIdResponse.meals[0].strIngredient12){
+    $("#recipe").append(ingTwelve)
+    }
+    if (mealIdResponse.meals[0].strIngredient13){
+    $("#recipe").append(ingThirteen)    
+    }
+    if (mealIdResponse.meals[0].strIngredient14){
+    $("#recipe").append(ingFourteen)
+    }
+    if (mealIdResponse.meals[0].strIngredient15){
+    $("#recipe").append(ingFifteen)
+    }
+    if (mealIdResponse.meals[0].strIngredient16){
+    $("#recipe").append(ingSixteen)
+    }
+    if (mealIdResponse.meals[0].strIngredient17){
+    $("#recipe").append(ingSeventeen)
+    }
+    if (mealIdResponse.meals[0].strIngredient18){
+    $("#recipe").append(ingEighteen)
+    }
+    if (mealIdResponse.meals[0].strIngredient19){
+    $("#recipe").append(ingNineteen)
+    }
+    if (mealIdResponse.meals[0].strIngredient20){
+    $("#recipe").append(ingTwenty)
+    }
+    $("#recipe").append(instructions)
+    
+
+    backButtonTwo = $("<button>").text("Go Back")
+    backButtonTwo.addClass("backBtnTwo")
+    $("#recipe").append(backButtonTwo)
+    })
+})
+//back button two
+$(document).on("click", ".backBtnTwo", function(event){
+    event.preventDefault()
+    $("#recipe-list").empty();
+    $("#recipe").empty();
+    getRecipes()
+})
