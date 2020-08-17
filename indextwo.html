@@ -21,6 +21,19 @@ Enter Country Name:    <input type="text" id="search">
 <div id="map"> </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
+function initMap(){
+    setMap(0,0,1)
+}
+function setMap(lat,lon, zoom){
+        var location = {lat:lat, lng: lon};
+        var map = new google.maps.Map(document.getElementById("map"),{
+            zoom: zoom,
+            center:location
+        });
+        var marker = new google.maps.Marker({
+            position: location,
+            map: map 
+        });
 
 $("#searchBtn").on("click",function(){
     var search =  $("#search").val()
@@ -36,21 +49,12 @@ $("#searchBtn").on("click",function(){
         var lat =response.results[0].geometry.location.lat
         var lon =response.results[0].geometry.location.lng
        console.log(lat,lon)
-        initMap(lat,lon)
+        setMap(lat,lon, 5)
     })
 })
 
 
-    function initMap(lat,lon){
-        var location = {lat:lat, lng: lon};
-        var map = new google.maps.Map(document.getElementById("map"),{
-            zoom: 4,
-            center:location
-        });
-        var marker = new google.maps.Marker({
-            position: location,
-            map: map 
-        });
+    
     }
     
 </script>
