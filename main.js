@@ -40,7 +40,7 @@ var countries = {
 
 var months = {
     January: "1",
-    Feburary: "2",
+    February: "2",
     March: "3",
     April: "4",
     May: "5",
@@ -54,7 +54,7 @@ var months = {
 }
 
 var country = "UnitedKingdom";
-var month = "1";
+var month = "January";
 
 //Get list of holidays corresponding to user input of country & month from Calendarific API
 function getHolidays() {
@@ -70,7 +70,8 @@ function getHolidays() {
         var holidayList = $("#holiday-list");
 
         if (calendarResponse.response.holidays.length === 0) {
-            alert("Try a different country/month")
+            // getMonthlyHolidays();
+            alert("pick again");
         }
         else {
             var instructions = $("<p>").text("Select a holiday to learn more!")
@@ -92,6 +93,58 @@ function getHolidays() {
     })
 
 }
+
+//Get number of holidays by month is month selection === 0
+// function getMonthlyHolidays() {
+//     cAPIkey = "963eb84b09e849ae6b1ab4fa1201730ea69687c5";
+//     calendarificURL = "https://calendarific.com/api/v2/holidays?&api_key=" + cAPIkey + "&country=" + countries[country].abbr + "&year=2021&type=national,local,religious";
+//     console.log(calendarificURL)
+//     $.ajax({
+//         url: calendarificURL,
+//         method: "GET"
+//     }).then(function (calendarResponse) {
+//         console.log(calendarResponse)
+//         let trueMonths = []
+//         //identify syntax in response to gather month for that holiday
+//         // calendarResponse.response.holidays[i].date.datetime.month
+//         //create month booleans set to false
+//         var january = false
+//         var february = false
+//         var march = false       
+//         var april = false
+//         var may = false
+//         var june = false
+//         var july = false
+//         var august = false
+//         var september = false
+//         var october = false
+//         var november = false
+//         var december = false
+//         //loop through holidays
+//         for (var i=0; i < calendarResponse.response.holidays.length; i++) {
+//             if (calendarResponse.response.holidays[i].date.datetime.month === 1) {
+//                 trueMonths.push("January")
+//                 console.log(calendarResponse.response.holidays[i].date.datetime.month)
+//                 console.log(trueMonths)
+//                 break;
+//             }
+//         }
+//         for (var i=0; i < calendarResponse.response.holidays.length; i++) {
+//             if (calendarResponse.response.holidays[i].date.datetime.month === 2) {
+//                 trueMonths.push("February")
+//                 break;
+//             }
+//         }
+//         //if calendarResponse = boolean, calendarResponse = true
+//         //if boolean = true, push month to months[i]
+//         //display message (<p>) that states which months have holidays
+//         //reset booleans to false
+//         //clear months[i]
+//         // var holidayList = $("#holiday-list");
+
+//     })
+// } 
+
 
 //Get list of recipes corresponding to user input of country/cuisine from MealDB API
 function getRecipes() {
