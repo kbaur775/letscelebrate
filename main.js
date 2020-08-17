@@ -2,7 +2,7 @@
 var holidayDate
 var holidayDescrip
 var holidayName
-var cAPIkey
+var cAPIkey = "052cf6937be04479cc9f5e6158857c83696191b0";
 var calendarificURL
 var mealID
 var city;
@@ -58,9 +58,7 @@ var month = "January";
 
 //Get list of holidays corresponding to user input of country & month from Calendarific API
 function getHolidays() {
-    cAPIkey = "963eb84b09e849ae6b1ab4fa1201730ea69687c5";
     calendarificURL = "https://calendarific.com/api/v2/holidays?&api_key=" + cAPIkey + "&country=" + countries[country].abbr + "&year=2021&month=" + months[month] + "&type=national,local,religious";
-
     $.ajax({
         url: calendarificURL,
         method: "GET"
@@ -86,7 +84,6 @@ function getHolidays() {
 }
 
 function getMonthlyHolidays() {
-    cAPIkey = "963eb84b09e849ae6b1ab4fa1201730ea69687c5";
     calendarificURL = "https://calendarific.com/api/v2/holidays?&api_key=" + cAPIkey + "&country=" + countries[country].abbr + "&year=2021&type=national,local,religious";
     var trueMonths = [];
     $.ajax({
@@ -150,7 +147,8 @@ function getCity() {
         beforeSend: function (xhr) { xhr.setRequestHeader("user-key", zAPIkey); },
         success: function (response) {
             if (response.location_suggestions.length > 1) {
-                var message = $("<p>").appendTo($("#restaurant-list"));
+                $("#cityMessage").empty();
+                var message = $("<p>").appendTo($("#cityMessage"));
                 message.text("We found a few options for that city. Please click on the best match.")
                 for (var i = 0; i < response.location_suggestions.length; i++) {
                     var cityOption = response.location_suggestions[i].name;
@@ -159,13 +157,15 @@ function getCity() {
                     cityBtn.addClass("cityBtn");
                     cityBtn.addClass("hollow button");
                     cityBtn.attr("id", response.location_suggestions[i].id);
-                    $("#restaurant-list").append(cityBtn);
+                    $("#cityMessage").append(cityBtn);
                 }
             } else if (response.location_suggestions.length === 0) {
+                $("#cityMessage").empty();
                 var errorMessage = $("<p>").text("Sorry, we couldn't find that city! Please try again.");
-                $("#restaurant-list").append(errorMessage);
+                $("#cityMessage").append(errorMessage);
             } else {
                 cityID = response.location_suggestions[0].id;
+                $("#cityMessage").empty();
                 $("#restaurant-list").addClass("grid-x grid-margin-x small-up-2 medium-up-3");
                 getRestaurants();
             }
@@ -212,7 +212,7 @@ function getRestaurants() {
                     $("#restaurant-list").append(restaurantCard);
                 }
             } else {
-                alert("sorry, no restaurants with that particular cuisine in this city!");
+                $("#cityMessage").text("Sorry, no restaurants with that particular cuisine in this city! Try searching a different city, or check out available recipes.");
             }
         }
     });
@@ -275,7 +275,9 @@ $("#searchBtn").on("click", function (event) {
 //EVENT LISTENER FOR RECIPE BUTTON
 $(document).on("click", "#recipeBtn", function (event) {
     $("#recipe-list").empty();
+    $("#recipe").empty();
     $("#restaurant-list").empty();
+    $("#cityMessage").empty();
     event.preventDefault();
     getRecipes();
 })
@@ -317,10 +319,11 @@ $(document).on("click", ".backBtn", function (event) {
     getHolidays()
 })
 
-// recipe functions
+// EVENT LISTENER FOR RECIPE CARD
 $(document).on("click", "img", function (event) {
     event.preventDefault()
     mealID = this.id
+    $("#shout2").addClass("hide")
     $("#recipe-list").empty();
     var mealURL = "https://www.themealdb.com/api/json/v1/1/lookup.php?i=" + mealID;
     $.ajax({
@@ -420,8 +423,9 @@ $(document).on("click", "img", function (event) {
             $("#recipe").append(ingTwenty)
         }
         $("#recipe").append(instructions)
-        backButtonTwo = $("<button>").text("Go Back")
+        backButtonTwo = $("<button>").text("Back to Recipe List")
         backButtonTwo.addClass("backBtnTwo")
+        backButtonTwo.addClass("hollow button")
         $("#recipe").append(backButtonTwo)
     })
 })
@@ -431,12 +435,14 @@ $(document).on("click", ".backBtnTwo", function (event) {
     event.preventDefault()
     $("#recipe-list").empty();
     $("#recipe").empty();
+    $("#shout2").removeClass("hide");
     getRecipes()
 })
 
 //EVENT LISTENER FOR CITY BUTTON TO SEARCH FOR RESTAURANTS
 $(document).on("click", ".cityBtn", function(event) {
     event.preventDefault();
+    $("#cityMessage").empty();
     cityID = $(this).attr("id");
     $("#restaurant-list").addClass("grid-x grid-margin-x small-up-2 medium-up-3");
     getRestaurants();
@@ -446,6 +452,7 @@ $(document).on("click", ".cityBtn", function(event) {
 $("#citySearchBtn").on("click", function(event) {
     event.preventDefault();
     $("#restaurant-list").empty();
+    $("#cityMessage").empty();
     city=$("#cityInput").val();
     $("#cityInput").val("");
     $("#restaurant-list").removeClass("grid-x grid-margin-x small-up-2 medium-up-3");
@@ -495,12 +502,14 @@ $(document).on("click", "#rstBackBtn", function(event) {
     event.preventDefault()
     $("#restaurant-list").empty();
     $("#restaurant-list").addClass("grid-x grid-margin-x small-up-2 medium-up-3");
+    $("#shout2").removeClass("hide");
     getRestaurants();
 })
 
+//EVENT LISTENER FOR NEXT BUTTON "EXPLORE FOOD OPTIONS"
 $(document).on("click", ".nextBtn", function(event) {
     event.preventDefault()
-    $("#shout2").removeClass("hide");
+    $("#food-container").removeClass("hide");
     var instructions = $("<p>").text("Now that you've chosen a holiday, let's celebrate with some food. Choose recipes to get a list of recipes to prepare at home or choose restaurants to find a restaurant in your city.")
     instructions.addClass("instruction-styling");
     var recipeBtn = $("<button>").text("Recipes");

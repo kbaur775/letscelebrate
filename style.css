@@ -11,13 +11,13 @@ body {
 }
 
 #countries, #month {
-     width: 175px;  
-     margin-left: 15px;
-     padding-top: 4px;
+    width: 175px;  
+    margin-left: 15px;
+    padding-top: 4px;
 }
 
 #shout {
-     margin-left: 15px;
+    margin-left: 15px;
 }
 
 h1, h2 {
@@ -37,8 +37,12 @@ footer {
 }
 
 .card {
-     width: 300px;
- 
+    width: 300px;
+}
+
+.card > img:hover {
+    opacity: 60%;
+    cursor: pointer;
 }
 
 .center {
@@ -58,8 +62,8 @@ footer {
 }
 
 #shout2 {
-     padding: 20px; 
-     text-align: center;
+    padding: 20px; 
+    text-align: center;
 }
 
 #restaurantBtn {
@@ -67,7 +71,7 @@ footer {
 }
 
 #shout1 {
-      text-align: center;
+    text-align: center;
 }
 
 .holiday-list-item {
@@ -89,11 +93,11 @@ footer {
 }
 
 .recipe-box {
-      box-sizing: border-box;
-      align-content: center;
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
+    box-sizing: border-box;
+    align-content: center;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .card-divider {
@@ -101,7 +105,7 @@ footer {
     color: darkcyan;
     text-align: center;
 }
- 
+
 h5 {
     font-family: 'Quicksand', sans-serif;
 }
@@ -116,11 +120,16 @@ h5 {
 }
 
 .rstInfo {
- font-weight: bolder;
+    font-weight: bolder;
 }
 
 .rstCard {
     width: 250px;
+}
+
+.rstCard:hover {
+    opacity: 60%;
+    cursor: pointer;
 }
 
 #restaurant-list {
@@ -135,11 +144,11 @@ h5 {
 #recipe > img {
     width: 100px
 }
- 
+
 #recipe {
-     text-align: center;
-     margin-left: 5px;
-     margin-right: 5px;
+    text-align: center;
+    margin-left: 5px;
+    margin-right: 5px;
 }
 
 #recipe > p {
@@ -169,4 +178,10 @@ h5 {
 
 .nextBtn {
     margin-left: 5px;
+}
+
+#cityMessage {
+    text-align: center;
+    margin-right: auto;
+    margin-left: auto;
 }
