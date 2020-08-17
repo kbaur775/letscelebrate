@@ -73,13 +73,18 @@ function getHolidays() {
             alert("Try a different country/month")
         }
         else {
+            var instructions = $("<p>").text("Select a holiday to learn more!")
+            instructions.addClass("instruction-styling")
+            holidayList.append(instructions)
             for (var i = 0; i < calendarResponse.response.holidays.length; i++) {
                 holidayName = calendarResponse.response.holidays[i].name
                 var hOne = $("<h4>").text(holidayName);
                 hOne.attr("id", i)
-                hOne.attr("class", "holiday-list");
+                hOne.attr("class", "holiday-list-item");
+                holidayList.removeClass("hide")
                 holidayList.append(hOne)
             }
+            
             //<h4> displays holiday name
             // <p> displays date
             // <p> displays description
@@ -258,8 +263,10 @@ $("#searchBtn").on("click", function (event) {
     getHolidays();
 })
 
-$("#recipeBtn").on("click", function (event) {
+//EVENT LISTENER FOR RECIPE BUTTON
+$(document).on("click", "#recipeBtn", function (event) {
     $("#recipe-list").empty();
+    $("#restaurant-list").empty();
     event.preventDefault();
     getRecipes();
 })
@@ -280,12 +287,17 @@ $(document).on("click", "h4", function (event) {
         hOne = $("<h4>").text(holidayName);
         pTwo = $("<p>").text(holidayDate);
         pThree = $("<p>").text(holidayDescrip);
-        backButton = $("<button>").text("Go Back")
+        backButton = $("<button>").text("Back to Holidays")
         backButton.addClass("backBtn")
+        backButton.addClass("hollow button")
+        nextStepButton = $("<button>").text("Explore Food Options")
+        nextStepButton.addClass("nextBtn")
+        nextStepButton.addClass("hollow button")
         $("#holiday-list").append(hOne)
         $("#holiday-list").append(pTwo)
         $("#holiday-list").append(pThree)
         $("#holiday-list").append(backButton)
+        $("#holiday-list").append(nextStepButton)
     })
 })
 
@@ -432,7 +444,7 @@ $("#citySearchBtn").on("click", function(event) {
 });
 
 //EVENT LISTENER FOR RESTAURANT BUTTON
-$("#restaurantBtn").on("click", function(event) {
+$(document).on("click", "#restaurantBtn", function(event) {
     event.preventDefault();
     $("#restaurant-list").empty();
     $("#recipe-list").empty();
@@ -474,4 +486,21 @@ $(document).on("click", "#rstBackBtn", function(event) {
     $("#restaurant-list").empty();
     $("#restaurant-list").addClass("grid-x grid-margin-x small-up-2 medium-up-3");
     getRestaurants();
+})
+
+$(document).on("click", ".nextBtn", function(event) {
+    event.preventDefault()
+    $("#shout2").removeClass("hide");
+    var instructions = $("<p>").text("Now that you've chosen a holiday, let's celebrate with some food. Choose recipes to get a list of recipes to prepare at home or choose restaurants to find a restaurant in your city.")
+    instructions.addClass("instruction-styling");
+    var recipeBtn = $("<button>").text("Recipes");
+    recipeBtn.addClass("hollow button");
+    recipeBtn.attr("id", "recipeBtn");
+    var restaurantBtn = $("<button>").text("Restaurants");
+    restaurantBtn.addClass("hollow button");
+    restaurantBtn.attr("id", "restaurantBtn");
+    $("#shout2").append(instructions);
+    $("#shout2").append(recipeBtn).append(restaurantBtn);
+    $(".nextBtn").addClass("hide");
+    $(".backBtn").addClass("hide");
 })

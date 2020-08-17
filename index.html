@@ -17,17 +17,22 @@
         <header id="header" class="clear">
             <div id="hgroup">
                 <h1><a href="#">Let's Celebrate!</a></h1>
+                <p class = "instruction-styling">Find holidays in a particular country and get recipes and discover local restaurants associated with that
+                    country’s cuisine.</p>
+
             </div>
         </header>
     </div>
 
     <!-- First Page -->
     <div class="wrapper row2">
-        <div id="container" class="clear">
-            <img src="Assets/first.jpg" alt="" class="center"></a>
+        <div id="holiday-container" class="clear">
+            <div id = "first-photo">
+                <img src="Assets/first.jpg" alt="" class="center">
+            </div>
             <section id="shout1">
                 <h1>Ready to Explore?</h1>
-                <p>(select a country and month from the dropdown menu to learn more!)</p>
+                <p class = "instruction-styling">Select a country and month from the dropdown menu to get a list of holidays!</p>
                 <select name="countries" id="countries">
                     <option value="UnitedKingdom">United Kingdom</option>
                     <option value="UnitedStates">United States</option>
@@ -73,25 +78,22 @@
 
                 <button id = "searchBtn" class="hollow button" href="#">Search</button>
 
-                
-                <p>Find holidays in a particular country and get recipes and discover local restaurants associated with that
-                    country’s cuisine.</p>
-
             </section>
 
             <!-- List of holidays -->
-            <div id = "holiday-list">
-                                            
+            <div id = "holiday-list" class = "hide">
+              <p class = "instruction-styling">Select a holiday to learn more!</p>                              
             </div>
 
             <!-- Second Page -->
-            <div id="container" class="clear">
-                <section id="shout2">
-                    <h2>Cooking or Going Out?</h2>
-                    <button id="recipeBtn" class="hollow button" href="#">Recipes</button>
-                    <button id="restaurantBtn" class="hollow button" href="#">Restaurants</button>
+            <div id="food-container">
+                <section id="shout2" class = "hide">
+                    <h2>Cooking or Going Out?
+                        <!-- <button id="recipeBtn" class="hollow button" href="#">Recipes</button>
+                        <button id="restaurantBtn" class="hollow button" href="#">Restaurants</button> -->
+                    </h2>
                 </section>
-
+            </div>
             <!-- List of recipes -->
             <!-- <div > -->
                 <div id = "recipe-list" class="grid-x grid-margin-x small-up-2 medium-up-3">
@@ -110,10 +112,9 @@
 
 
                 <!-- Footer -->
-            <footer>
+                <footer>
                 Created by Sara, Jeffrey, Christian, Baur and Lucy
-                <br></br>
-            </footer>
+                </footer>
 
                 <script src="https://code.jquery.com/jquery.js"></script>
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
