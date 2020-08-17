@@ -65,13 +65,9 @@ function getHolidays() {
         url: calendarificURL,
         method: "GET"
     }).then(function (calendarResponse) {
-
-        //CERTAIN COUNTRIES/MONTHS DON'T HAVE HOLIDAYS IN ARRAY
         var holidayList = $("#holiday-list");
-
         if (calendarResponse.response.holidays.length === 0) {
-            // getMonthlyHolidays();
-            alert("pick again");
+            getMonthlyHolidays();
         }
         else {
             var instructions = $("<p>").text("Select a holiday to learn more!")
@@ -85,66 +81,32 @@ function getHolidays() {
                 holidayList.removeClass("hide")
                 holidayList.append(hOne)
             }
-            
-            //<h4> displays holiday name
-            // <p> displays date
-            // <p> displays description
         }
     })
-
 }
 
-//Get number of holidays by month is month selection === 0
-// function getMonthlyHolidays() {
-//     cAPIkey = "963eb84b09e849ae6b1ab4fa1201730ea69687c5";
-//     calendarificURL = "https://calendarific.com/api/v2/holidays?&api_key=" + cAPIkey + "&country=" + countries[country].abbr + "&year=2021&type=national,local,religious";
-//     console.log(calendarificURL)
-//     $.ajax({
-//         url: calendarificURL,
-//         method: "GET"
-//     }).then(function (calendarResponse) {
-//         console.log(calendarResponse)
-//         let trueMonths = []
-//         //identify syntax in response to gather month for that holiday
-//         // calendarResponse.response.holidays[i].date.datetime.month
-//         //create month booleans set to false
-//         var january = false
-//         var february = false
-//         var march = false       
-//         var april = false
-//         var may = false
-//         var june = false
-//         var july = false
-//         var august = false
-//         var september = false
-//         var october = false
-//         var november = false
-//         var december = false
-//         //loop through holidays
-//         for (var i=0; i < calendarResponse.response.holidays.length; i++) {
-//             if (calendarResponse.response.holidays[i].date.datetime.month === 1) {
-//                 trueMonths.push("January")
-//                 console.log(calendarResponse.response.holidays[i].date.datetime.month)
-//                 console.log(trueMonths)
-//                 break;
-//             }
-//         }
-//         for (var i=0; i < calendarResponse.response.holidays.length; i++) {
-//             if (calendarResponse.response.holidays[i].date.datetime.month === 2) {
-//                 trueMonths.push("February")
-//                 break;
-//             }
-//         }
-//         //if calendarResponse = boolean, calendarResponse = true
-//         //if boolean = true, push month to months[i]
-//         //display message (<p>) that states which months have holidays
-//         //reset booleans to false
-//         //clear months[i]
-//         // var holidayList = $("#holiday-list");
-
-//     })
-// } 
-
+function getMonthlyHolidays() {
+    cAPIkey = "963eb84b09e849ae6b1ab4fa1201730ea69687c5";
+    calendarificURL = "https://calendarific.com/api/v2/holidays?&api_key=" + cAPIkey + "&country=" + countries[country].abbr + "&year=2021&type=national,local,religious";
+    var trueMonths = [];
+    $.ajax({
+        url: calendarificURL,
+        method: "GET"
+    }).then(function (calendarResponse) {
+        for (var m = 1; m<13; m++) {
+            for (var i = 0; i < calendarResponse.response.holidays.length; i++) {
+                if (calendarResponse.response.holidays[i].date.datetime.month === m) {
+                    var index = m-1;
+                    trueMonths.push((Object.keys(months)[index]));
+                    break;
+                }
+            }
+        }
+        var message1 = $("<p>").text("There are no holidays in " + country + " in " + month + " in our database.")
+        var message2 = $("<p>").text(country + " has holidays in " + trueMonths.join(", ") + ".")
+        $("#messageDiv").append(message1).append(message2);
+    })
+}
 
 //Get list of recipes corresponding to user input of country/cuisine from MealDB API
 function getRecipes() {
@@ -154,7 +116,6 @@ function getRecipes() {
         url: mealURL,
         method: "GET"
     }).then(function (mealResponse) {
-
         var mealList = $("#recipe-list");
         for (var i = 0; i < mealResponse.meals.length; i++) {
             var mealName = mealResponse.meals[i].strMeal
@@ -163,7 +124,6 @@ function getRecipes() {
             var cellCard = $("<div>")
             cellCard.addClass("cell")
             var recipeCard = $("<div>")
-
             recipeCard.addClass("card")
             var mealImage = $("<img>")
             mealImage.attr("id", mealID)
@@ -176,10 +136,6 @@ function getRecipes() {
             cellCard.append(recipeCard)
             cellCard.attr("class", "recipe-box")
             mealList.append(cellCard)
-
-            // var hOne = $("<h4>").text(mealName);
-            // mealList.append(hOne);
-
         }
     })
 }
@@ -206,7 +162,8 @@ function getCity() {
                     $("#restaurant-list").append(cityBtn);
                 }
             } else if (response.location_suggestions.length === 0) {
-                alert("sorry, couldn't find that city! try again");
+                var errorMessage = $("<p>").text("Sorry, we couldn't find that city! Please try again.");
+                $("#restaurant-list").append(errorMessage);
             } else {
                 cityID = response.location_suggestions[0].id;
                 $("#restaurant-list").addClass("grid-x grid-margin-x small-up-2 medium-up-3");
@@ -298,7 +255,6 @@ function getRestaurantDetails() {
     });
 }
 
-
 //EVENT LISTENER FOR COUNTRY DROPDOWN MENU
 $("#countries").change(function () {
     country = (this.value);
@@ -361,12 +317,10 @@ $(document).on("click", ".backBtn", function (event) {
     getHolidays()
 })
 
-
 // recipe functions
 $(document).on("click", "img", function (event) {
     event.preventDefault()
     mealID = this.id
-
     $("#recipe-list").empty();
     var mealURL = "https://www.themealdb.com/api/json/v1/1/lookup.php?i=" + mealID;
     $.ajax({
@@ -471,6 +425,7 @@ $(document).on("click", "img", function (event) {
         $("#recipe").append(backButtonTwo)
     })
 })
+
 //back button two
 $(document).on("click", ".backBtnTwo", function (event) {
     event.preventDefault()
@@ -490,6 +445,7 @@ $(document).on("click", ".cityBtn", function(event) {
 //EVENT LISTENER FOR CITY SEARCH BUTTON
 $("#citySearchBtn").on("click", function(event) {
     event.preventDefault();
+    $("#restaurant-list").empty();
     city=$("#cityInput").val();
     $("#cityInput").val("");
     $("#restaurant-list").removeClass("grid-x grid-margin-x small-up-2 medium-up-3");
@@ -501,6 +457,7 @@ $(document).on("click", "#restaurantBtn", function(event) {
     event.preventDefault();
     $("#restaurant-list").empty();
     $("#recipe-list").empty();
+    $("#restaurant-list").removeClass("grid-x grid-margin-x small-up-2 medium-up-3");
     var form = $("<form>");
     var label = $("<label>");
     label.text("Enter a city and search for restaurants:")
