@@ -523,3 +523,39 @@ $(document).on("click", ".nextBtn", function(event) {
     $(".nextBtn").addClass("hide");
     $(".backBtn").addClass("hide");
 })
+
+function initMap(){
+    setMap(0,0,1)
+}
+function setMap(lat,lon, zoom){
+        var location = {lat:lat, lng: lon};
+        var map = new google.maps.Map(document.getElementById("map"),{
+            zoom: zoom,
+            center:location
+        });
+        var marker = new google.maps.Marker({
+            position: location,
+            map: map 
+        });
+
+$("#searchBtn").on("click",function(){
+    var search =  $("#search").val()
+     
+   var  queryUrl = "https://maps.googleapis.com/maps/api/geocode/json?address="+search+"&key=AIzaSyAgXL4y4IhyRIFEYBF9wke-Ex5X6m3sWhc"
+    console.log(queryUrl)
+    $.ajax({
+        url:queryUrl, 
+        method:"GET"
+    })
+    .then(function(response){
+        console.log(response);
+        var lat =response.results[0].geometry.location.lat
+        var lon =response.results[0].geometry.location.lng
+       console.log(lat,lon)
+        setMap(lat,lon, 5)
+    })
+})
+
+
+    
+    }
