@@ -156,6 +156,24 @@ $("#recipeBtn").on("click", function(event) {
     getRecipes();
 })
 
+function initMap(){
+    setMap(0,0,1)
+
+}
+function setMap(lat, lon, zoom){
+    
+        var location = {lat:lat, lng: lon};
+        var map = new google.maps.Map(document.getElementById("map"),{
+            zoom: zoom,
+            center:location
+
+        
+        });
+        var marker = new google.maps.Marker({
+            position: location,
+            map: map 
+        });
+    }
 $("#searchBtn").on("click",function(){
     var search =  $("#search").val()
      
@@ -173,4 +191,5 @@ $("#searchBtn").on("click",function(){
         setMap(lat,lon, 5)
     })
 })
+
 
