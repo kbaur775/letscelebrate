@@ -7,72 +7,104 @@ body {
     color: #696969;
     font-family: 'Quicksand', sans-serif;
 }
- #countries, #month {
+
+#countries, #month {
      width: 175px;  
      margin-left: 15px;
- }
+}
 
- #shout {
+#shout {
      margin-left: 15px;
- }
+}
 
- h1, h2 {
+h1, h2 {
     font-family: 'Quicksand', sans-serif;
     text-align: center;
- }
+}
 
- footer {
-     background-color: darkcyan;
-     color: white;
-     text-align: right;
-     padding-right: 5px;
+footer {
+    background-color:lightslategrey;
+    color: lightcyan;
+    text-align: right;
+    padding-right: 5px;
+    font-weight: bolder;
 
- }
+}
 
- .card {
+.card {
      width: 300px;
  
- }
+}
 
- .center {
+.center {
     display: block;
     margin-left: auto;
     margin-right: auto;
     width: 100%;
-  }
+}
 
-  #holiday-list {
+#holiday-list {
       text-align: center;
-  }
+}
 
-  #shout2 {
+#shout2 {
      padding: 20px; 
      text-align: center;
-  }
+}
 
-  #shout1 {
+#shout1 {
       text-align: center;
-  }
+}
 
-  .holiday-list {
+.holiday-list {
     font-family: 'Quicksand', sans-serif; 
     font-weight: bold;
-  }
+}
 
-  .recipe-title {
+.recipe-title {
     font-family: 'Quicksand', sans-serif; 
     color: darkcyan;
     text-align: center;
     font-size: medium;
     font-weight: bold;
     padding: 5px;
-  }
+}
 
-  .recipe-box {
+.recipe-box {
       box-sizing: border-box;
       align-content: center;
       display: block;
       margin-left: auto;
       margin-right: auto;
-  }
+}
+
+.card-divider {
+    background-color: lightslategrey;
+    color: lightcyan;
+}
+ 
+h5 {
+    font-family: 'Quicksand', sans-serif;
+}
+
+.card-section {
+    background-color: darkcyan;
+    width: 100%;
+    height: 250px;
+    align-content: center;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.rstInfo {
+ font-weight: bolder;
+}
+
+.rstCard {
+    width: 250px;
+}
+
+#restaurant-list {
+    text-align: center;
+}
 
