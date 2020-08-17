@@ -38,6 +38,7 @@
                 <p class="instruction-styling">Select a country and month from the dropdown menu to get a list of
                     holidays!</p>
                 <select name="countries" id="countries">
+                    <option value="">[Select Country]</option>
                     <option value="UnitedKingdom">United Kingdom</option>
                     <option value="UnitedStates">United States</option>
                     <option value="France">France</option>
@@ -66,6 +67,7 @@
                 </select>
 
                 <select name="month" id="month">
+                    <option value="">[Select Month]</option>
                     <option value="January">January</option>
                     <option value="February">February</option>
                     <option value="March">March</option>
@@ -83,9 +85,11 @@
                 <button id="searchBtn" class="hollow button" href="#">Search</button>
 
             </section>
+
+            <div id="messageDiv"></div>
+
             <div id="map"> </div>
             
-
             <!-- List of holidays -->
             <div id="holiday-list" class="hide">
                 <p class="instruction-styling">Select a holiday to learn more!</p>

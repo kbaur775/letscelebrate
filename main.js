@@ -53,8 +53,8 @@ var months = {
     December: "12"
 }
 
-var country = "UnitedKingdom";
-var month = "January";
+var country;
+var month;
 
 //Get list of holidays corresponding to user input of country & month from Calendarific API
 function getHolidays() {
@@ -64,10 +64,10 @@ function getHolidays() {
         method: "GET"
     }).then(function (calendarResponse) {
         var holidayList = $("#holiday-list");
+        console.log(calendarResponse.response.holidays.length);
         if (calendarResponse.response.holidays.length === 0) {
             getMonthlyHolidays();
-        }
-        else {
+        }else {
             var instructions = $("<p>").text("Select a holiday to learn more!")
             instructions.addClass("instruction-styling")
             holidayList.append(instructions)
@@ -90,10 +90,10 @@ function getMonthlyHolidays() {
         url: calendarificURL,
         method: "GET"
     }).then(function (calendarResponse) {
-        for (var m = 1; m<13; m++) {
+        for (var m = 1; m < 13; m++) {
             for (var i = 0; i < calendarResponse.response.holidays.length; i++) {
                 if (calendarResponse.response.holidays[i].date.datetime.month === m) {
-                    var index = m-1;
+                    var index = m - 1;
                     trueMonths.push((Object.keys(months)[index]));
                     break;
                 }
@@ -228,6 +228,7 @@ function getRestaurantDetails() {
         success: function (response) {
             var rstDetailsDiv = $("<div>");
             var rstImage = $("<img>").appendTo(rstDetailsDiv);
+            rstImage.addClass("rstImage");
             var rstName = $("<h3>").appendTo(rstDetailsDiv);
             var rstStars = $("<p>").appendTo(rstDetailsDiv);
             var rstAddress = $("<p>").appendTo(rstDetailsDiv);
@@ -235,7 +236,7 @@ function getRestaurantDetails() {
             var rstWebsite = $("<a>").appendTo(rstDetailsDiv);
             if (response.featured_image === "") {
                 rstImage.attr("src", "Assets/Grains-Map_AdobeStock_46075922.jpeg");
-            }else {
+            } else {
                 rstImage.attr("src", response.featured_image);
             }
             rstName.text(response.name);
@@ -258,6 +259,16 @@ function getRestaurantDetails() {
 //EVENT LISTENER FOR COUNTRY DROPDOWN MENU
 $("#countries").change(function () {
     country = (this.value);
+    var search = country
+    var queryUrl = "https://maps.googleapis.com/maps/api/geocode/json?address=" + search + "&key=AIzaSyAgXL4y4IhyRIFEYBF9wke-Ex5X6m3sWhc"
+    $.ajax({
+        url: queryUrl,
+        method: "GET"
+    }).then(function (response) {
+        var lat = response.results[0].geometry.location.lat
+        var lon = response.results[0].geometry.location.lng
+        setMap(lat, lon, 3)
+    })
 });
 
 //EVENT LISTENER FOR MONTH DROPDOWN MENU
@@ -266,8 +277,13 @@ $("#month").change(function () {
 })
 
 //EVENT LISTENER FOR SEARCH BUTTON
-$("#searchBtn").on("click", function (event) {
+$("#searchBtn").on("click", function(event) {
     $("#holiday-list").empty();
+    $("#messageDiv").empty();
+    $("#recipe-list").empty();
+    $("#recipe").empty();
+    $("#restaurant-list").empty();
+    $("#food-container").addClass("hide");
     event.preventDefault();
     getHolidays();
 })
@@ -440,7 +456,7 @@ $(document).on("click", ".backBtnTwo", function (event) {
 })
 
 //EVENT LISTENER FOR CITY BUTTON TO SEARCH FOR RESTAURANTS
-$(document).on("click", ".cityBtn", function(event) {
+$(document).on("click", ".cityBtn", function (event) {
     event.preventDefault();
     $("#cityMessage").empty();
     cityID = $(this).attr("id");
@@ -449,18 +465,18 @@ $(document).on("click", ".cityBtn", function(event) {
 });
 
 //EVENT LISTENER FOR CITY SEARCH BUTTON
-$("#citySearchBtn").on("click", function(event) {
+$("#citySearchBtn").on("click", function (event) {
     event.preventDefault();
     $("#restaurant-list").empty();
     $("#cityMessage").empty();
-    city=$("#cityInput").val();
+    city = $("#cityInput").val();
     $("#cityInput").val("");
     $("#restaurant-list").removeClass("grid-x grid-margin-x small-up-2 medium-up-3");
     getCity();
 });
 
 //EVENT LISTENER FOR RESTAURANT BUTTON
-$(document).on("click", "#restaurantBtn", function(event) {
+$(document).on("click", "#restaurantBtn", function (event) {
     event.preventDefault();
     $("#restaurant-list").empty();
     $("#recipe-list").empty();
@@ -481,15 +497,15 @@ $(document).on("click", "#restaurantBtn", function(event) {
 })
 
 //EVENT LISTENER FOR RESTAURANT SEARCH BUTTON
-$(document).on("click", "#restaurantSearchBtn", function(event){
+$(document).on("click", "#restaurantSearchBtn", function (event) {
     event.preventDefault();
-    city=$("#cityInput").val();
+    city = $("#cityInput").val();
     $("#cityInput").val("");
     getCity();
 })
 
 //EVENT LISTENER FOR RESTAURANT CARD
-$(document).on("click", ".rstCard", function(event){
+$(document).on("click", ".rstCard", function (event) {
     event.preventDefault();
     restaurantID = $(this).attr("id");
     $("#restaurant-list").empty();
@@ -498,7 +514,7 @@ $(document).on("click", ".rstCard", function(event){
 })
 
 //EVENT LISTENER FOR RESTAURANT BACK BUTTON
-$(document).on("click", "#rstBackBtn", function(event) {
+$(document).on("click", "#rstBackBtn", function (event) {
     event.preventDefault()
     $("#restaurant-list").empty();
     $("#restaurant-list").addClass("grid-x grid-margin-x small-up-2 medium-up-3");
@@ -507,8 +523,10 @@ $(document).on("click", "#rstBackBtn", function(event) {
 })
 
 //EVENT LISTENER FOR NEXT BUTTON "EXPLORE FOOD OPTIONS"
-$(document).on("click", ".nextBtn", function(event) {
+$(document).on("click", ".nextBtn", function (event) {
     event.preventDefault()
+    $("#shout2").empty();
+    $("#holiday-list").addClass("chosen");
     $("#food-container").removeClass("hide");
     var instructions = $("<p>").text("Now that you've chosen a holiday, let's celebrate with some food. Choose recipes to get a list of recipes to prepare at home or choose restaurants to find a restaurant in your city.")
     instructions.addClass("instruction-styling");
@@ -524,38 +542,18 @@ $(document).on("click", ".nextBtn", function(event) {
     $(".backBtn").addClass("hide");
 })
 
-function initMap(){
-    setMap(0,0,1)
+function initMap() {
+    setMap(0, 0, 2);
 }
-function setMap(lat,lon, zoom){
-        var location = {lat:lat, lng: lon};
-        var map = new google.maps.Map(document.getElementById("map"),{
-            zoom: zoom,
-            center:location
-        });
-        var marker = new google.maps.Marker({
-            position: location,
-            map: map 
-        });
 
-$("#searchBtn").on("click",function(){
-    var search =  $("#search").val()
-     
-   var  queryUrl = "https://maps.googleapis.com/maps/api/geocode/json?address="+search+"&key=AIzaSyAgXL4y4IhyRIFEYBF9wke-Ex5X6m3sWhc"
-    console.log(queryUrl)
-    $.ajax({
-        url:queryUrl, 
-        method:"GET"
-    })
-    .then(function(response){
-        console.log(response);
-        var lat =response.results[0].geometry.location.lat
-        var lon =response.results[0].geometry.location.lng
-       console.log(lat,lon)
-        setMap(lat,lon, 5)
-    })
-})
-
-
-    
-    }
+function setMap(lat, lon, zoom) {
+    var location = { lat: lat, lng: lon };
+    var map = new google.maps.Map(document.getElementById("map"), {
+        zoom: zoom,
+        center: location
+    });
+    var marker = new google.maps.Marker({
+        position: location,
+        map: map
+    });
+}
