@@ -33,7 +33,7 @@ footer {
     font-weight: bold;
     font-style: italic;
     width: 100%;
-
+    margin-top: 50px;
 }
 
 .card {
@@ -58,7 +58,11 @@ footer {
     max-width: 500px;
     margin-left: auto;
     margin-right: auto;
+}
 
+.chosen {
+    background-image: linear-gradient(goldenrod, darkcyan);
+    color: white;
 }
 
 #shout2 {
@@ -67,6 +71,14 @@ footer {
 }
 
 #restaurantBtn {
+    margin-left: 5px;
+}
+
+#rstBackBtn {
+    margin-top: 20px;
+}
+
+.cityBtn, #citySearchBtn {
     margin-left: 5px;
 }
 
@@ -149,6 +161,7 @@ h5 {
     text-align: center;
     margin-left: 5px;
     margin-right: 5px;
+    margin-top: 20px;
 }
 
 #recipe > p {
@@ -184,4 +197,22 @@ h5 {
     text-align: center;
     margin-right: auto;
     margin-left: auto;
+}
+
+#map {
+    height: 200px;
+    width: 75%;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+}
+
+#messageDiv {
+    text-align: center;
+}
+
+.rstImage {
+    max-height: 200px;
+    margin-top: 20px;
 }
