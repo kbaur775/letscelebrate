@@ -1,3 +1,6 @@
+/**************************************************************************************************  
+GENERAL STYLES & FONTS
+**************************************************************************************************/
 head {
     color: #696969;
 }
@@ -10,14 +13,26 @@ body {
     margin: auto;
 }
 
+#shout1 {
+    text-align: center;
+}
+
+#shout2 {
+    padding: 20px; 
+    text-align: center;
+}
+
+#shout2 > p {
+    max-width: 75ch;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 #countries, #month {
     width: 175px;  
     margin-left: 15px;
     padding-top: 4px;
-}
-
-#shout {
-    margin-left: 15px;
 }
 
 h1, h2 {
@@ -36,15 +51,6 @@ footer {
     margin-top: 50px;
 }
 
-.card {
-    width: 300px;
-}
-
-.card > img:hover {
-    opacity: 60%;
-    cursor: pointer;
-}
-
 .center {
     display: block;
     margin-left: auto;
@@ -52,38 +58,46 @@ footer {
     width: 100%;
 }
 
+#first-photo > img {
+    height:350px;
+    width:700px;
+}
+
+#first-photo {
+    background-color: goldenrod;
+    width: 100%;
+}
+
+.instruction-styling {
+    text-align: center;
+    font-style: italic;
+}
+
+.hide {
+    display: none;
+}
+
+/**************************************************************************************************  
+MAP
+**************************************************************************************************/
+#map {
+    height: 200px;
+    width: 75%;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+}
+
+/**************************************************************************************************  
+HOLIDAYS
+**************************************************************************************************/
 #holiday-list {
     text-align: center;
     border: double;
     max-width: 500px;
     margin-left: auto;
     margin-right: auto;
-}
-
-.chosen {
-    background-image: linear-gradient(goldenrod, darkcyan);
-    color: white;
-}
-
-#shout2 {
-    padding: 20px; 
-    text-align: center;
-}
-
-#restaurantBtn {
-    margin-left: 5px;
-}
-
-#rstBackBtn {
-    margin-top: 20px;
-}
-
-.cityBtn, #citySearchBtn {
-    margin-left: 5px;
-}
-
-#shout1 {
-    text-align: center;
 }
 
 .holiday-list-item {
@@ -95,6 +109,43 @@ footer {
     cursor: pointer;
 }
 
+#messageDiv {
+    text-align: center;
+}
+
+.chosen {
+    background-image: linear-gradient(goldenrod, darkcyan);
+    color: white;
+}
+
+#searchBtn {
+    margin-top: 15px;
+}
+
+.nextBtn {
+    margin-left: 5px;
+}
+
+/**************************************************************************************************  
+RECIPES
+**************************************************************************************************/
+.card {
+    width: 300px;
+}
+
+.card > img:hover {
+    opacity: 60%;
+    cursor: pointer;
+}
+
+.recipe-box {
+    box-sizing: border-box;
+    align-content: center;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .recipe-title {
     font-family: 'Quicksand', sans-serif; 
     color: darkcyan;
@@ -104,12 +155,52 @@ footer {
     padding: 5px;
 }
 
-.recipe-box {
-    box-sizing: border-box;
-    align-content: center;
-    display: block;
-    margin-left: auto;
+#recipe > img {
+    width: 100px
+}
+
+#recipe {
+    text-align: center;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 20px;
+}
+
+#recipe > p {
+    margin-top: 10px;
+    max-width: 75ch;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+/**************************************************************************************************  
+CITY SEARCH FOR RESTAURANTS
+**************************************************************************************************/
+.cityBtn, #citySearchBtn {
+    margin-left: 5px;
+}
+
+#cityInput {
+    padding-right: 10px;
+    width: 175px;
+}
+
+#cityMessage {
+    text-align: center;
     margin-right: auto;
+    margin-left: auto;
+}
+
+
+/**************************************************************************************************  
+RESTAURANTS
+**************************************************************************************************/
+#restaurantBtn {
+    margin-left: 5px;
+}
+
+#rstBackBtn {
+    margin-top: 20px;
 }
 
 .card-divider {
@@ -144,75 +235,11 @@ h5 {
     cursor: pointer;
 }
 
-#restaurant-list {
-    text-align: center;
-}
-
-#cityInput {
-    padding-right: 10px;
-    width: 175px;
-}
-
-#recipe > img {
-    width: 100px
-}
-
-#recipe {
-    text-align: center;
-    margin-left: 5px;
-    margin-right: 5px;
-    margin-top: 20px;
-}
-
-#recipe > p {
-    margin-top: 10px;
-    max-width: 75ch;
-    margin-left:auto;
-    margin-right:auto;
-}
-
-#first-photo > img {
-    height:350px;
-    width:700px;
-}
-
-#first-photo {
-    background-color: goldenrod;
-}
-
-.instruction-styling {
-    text-align: center;
-    font-style: italic;
-}
-
-.hide {
-    display: none;
-}
-
-.nextBtn {
-    margin-left: 5px;
-}
-
-#cityMessage {
-    text-align: center;
-    margin-right: auto;
-    margin-left: auto;
-}
-
-#map {
-    height: 200px;
-    width: 75%;
-    text-align: center;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 20px;
-}
-
-#messageDiv {
-    text-align: center;
-}
-
 .rstImage {
     max-height: 200px;
     margin-top: 20px;
+}
+
+#restaurant-list {
+    text-align: center;
 }

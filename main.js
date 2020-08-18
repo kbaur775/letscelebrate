@@ -1,4 +1,6 @@
-//main script
+/**************************************************************************************************  
+DECLARE VARIABLES & OBJECTS
+**************************************************************************************************/
 var holidayDate
 var holidayDescrip
 var holidayName
@@ -9,7 +11,8 @@ var city;
 var cityID;
 var zAPIkey = "9ec596d30e9780fcee974a3cbaeb59a2";
 var restaurantID;
-
+var country;
+var month;
 
 var countries = {
     Canada: { name: "Canada", abbr: "CA", cuisine: "Canadian", zID: "381" },
@@ -22,11 +25,9 @@ var countries = {
     Italy: { name: "Italy", abbr: "IT", cuisine: "Italian", zID: "55" },
     Jamaica: { name: "Jamaica", abbr: "JM", cuisine: "Jamaican", zID: "207" },
     Japan: { name: "Japan", abbr: "JP", cuisine: "Japanese", zID: "60" },
-    Kenya: { name: "Kenya", abbr: "KE", cuisine: "Kenyan", zID: "" },
     Malaysia: { name: "Malaysia", abbr: "MY", cuisine: "Malaysian", zID: "69" },
     Mexico: { name: "Mexico", abbr: "MX", cuisine: "Mexican", zID: "73" },
     Morocco: { name: "Morocco", abbr: "MA", cuisine: "Moroccan", zID: "147" },
-    Netherlands: { name: "Netherlands", abbr: "NL", cuisine: "Dutch", zID: "" },
     Poland: { name: "Poland", abbr: "PL", cuisine: "Polish", zID: "219" },
     Russia: { name: "Russia", abbr: "RU", cuisine: "Russian", zID: "84" },
     Spain: { name: "Spain", abbr: "ES", cuisine: "Spanish", zID: "89" },
@@ -53,9 +54,30 @@ var months = {
     December: "12"
 }
 
-var country;
-var month;
+/**************************************************************************************************  
+DEFINE MAP FUNCTIONS
+**************************************************************************************************/
+//Initialize map on page load to show zoomed-out view of the world map
+function initMap() {
+    setMap(0, 0, 2);
+}
 
+//Change map to focus on location & place marker
+function setMap(lat, lon, zoom) {
+    var location = { lat: lat, lng: lon };
+    var map = new google.maps.Map(document.getElementById("map"), {
+        zoom: zoom,
+        center: location
+    });
+    var marker = new google.maps.Marker({
+        position: location,
+        map: map
+    });
+}
+
+/**************************************************************************************************  
+DEFINE HOLIDAY/CALENDARIFIC FUNCTIONS
+**************************************************************************************************/
 //Get list of holidays corresponding to user input of country & month from Calendarific API
 function getHolidays() {
     calendarificURL = "https://calendarific.com/api/v2/holidays?&api_key=" + cAPIkey + "&country=" + countries[country].abbr + "&year=2021&month=" + months[month] + "&type=national,local,religious";
@@ -67,7 +89,7 @@ function getHolidays() {
         console.log(calendarResponse.response.holidays.length);
         if (calendarResponse.response.holidays.length === 0) {
             getMonthlyHolidays();
-        }else {
+        } else {
             var instructions = $("<p>").text("Select a holiday to learn more!")
             instructions.addClass("instruction-styling")
             holidayList.append(instructions)
@@ -83,6 +105,8 @@ function getHolidays() {
     })
 }
 
+//If user chooses country+month pair that returns no results, gets list of country's holidays for full year, 
+//tracks which months have holidays, and displays message to user
 function getMonthlyHolidays() {
     calendarificURL = "https://calendarific.com/api/v2/holidays?&api_key=" + cAPIkey + "&country=" + countries[country].abbr + "&year=2021&type=national,local,religious";
     var trueMonths = [];
@@ -105,6 +129,9 @@ function getMonthlyHolidays() {
     })
 }
 
+/**************************************************************************************************  
+DEFINE RECIPE/MEALDB FUNCTIONS
+**************************************************************************************************/
 //Get list of recipes corresponding to user input of country/cuisine from MealDB API
 function getRecipes() {
     $("#recipe-list").empty();
@@ -137,7 +164,11 @@ function getRecipes() {
     })
 }
 
-//Get list (& map?) of restaurants corresponding to user input of country/cuisine AND city (or geolocation?) using Zomato API
+/**************************************************************************************************  
+DEFINE RESTAURANT/ZOMATO FUNCTIONS
+**************************************************************************************************/
+//Get city ID using Zomato API
+//If user input matches more than one city, generate buttons that represent potential city matches
 function getCity() {
     var zomatoURL = "https://developers.zomato.com/api/v2.1/cities?q=" + city;
     $.ajax({
@@ -149,7 +180,7 @@ function getCity() {
             if (response.location_suggestions.length > 1) {
                 $("#cityMessage").empty();
                 var message = $("<p>").appendTo($("#cityMessage"));
-                message.text("We found a few options for that city. Please click on the best match.")
+                message.text("We found a few matches for that city name. Please click on the best match.")
                 for (var i = 0; i < response.location_suggestions.length; i++) {
                     var cityOption = response.location_suggestions[i].name;
                     var cityBtn = $("<button>");
@@ -173,6 +204,7 @@ function getCity() {
     });
 }
 
+//Get list of restaurants corresponding to user input of country/cuisine AND city using Zomato API
 function getRestaurants() {
     var zomatoURL = "https://developers.zomato.com/api/v2.1/search?entity_id=" + cityID + "&entity_type=city&cuisines=" + countries[country].zID;
     $.ajax({
@@ -183,7 +215,6 @@ function getRestaurants() {
         success: function (response) {
             $("#restaurant-list").empty();
             if (response.restaurants.length > 0) {
-                console.log(response);
                 for (var i = 0; i < response.restaurants.length; i++) {
                     var restaurantName = response.restaurants[i].restaurant.name;
                     var restaurantCard = $("<div>");
@@ -218,6 +249,7 @@ function getRestaurants() {
     });
 };
 
+//Get more detailed information about a particular restaurant & display to user
 function getRestaurantDetails() {
     var zomatoURL = "https://developers.zomato.com/api/v2.1/restaurant?res_id=" + restaurantID;
     $.ajax({
@@ -256,8 +288,17 @@ function getRestaurantDetails() {
     });
 }
 
+/**************************************************************************************************  
+ADD HOLIDAY SEARCH MENU EVENT LISTENERS
+**************************************************************************************************/
 //EVENT LISTENER FOR COUNTRY DROPDOWN MENU
-$("#countries").change(function () {
+$("#countries").change(function() {
+    $("#holiday-list").empty();
+    $("#recipe-list").empty();
+    $("#recipe").empty();
+    $("#restaurant-list").empty();
+    $("#city-message").empty();
+    $("#food-container").addClass("hide");
     country = (this.value);
     var search = country
     var queryUrl = "https://maps.googleapis.com/maps/api/geocode/json?address=" + search + "&key=AIzaSyAgXL4y4IhyRIFEYBF9wke-Ex5X6m3sWhc"
@@ -272,7 +313,7 @@ $("#countries").change(function () {
 });
 
 //EVENT LISTENER FOR MONTH DROPDOWN MENU
-$("#month").change(function () {
+$("#month").change(function() {
     month = (this.value);
 })
 
@@ -284,22 +325,16 @@ $("#searchBtn").on("click", function(event) {
     $("#recipe").empty();
     $("#restaurant-list").empty();
     $("#food-container").addClass("hide");
+    $("#holiday-list").removeClass("chosen");
     event.preventDefault();
     getHolidays();
 })
 
-//EVENT LISTENER FOR RECIPE BUTTON
-$(document).on("click", "#recipeBtn", function (event) {
-    $("#recipe-list").empty();
-    $("#recipe").empty();
-    $("#restaurant-list").empty();
-    $("#cityMessage").empty();
-    event.preventDefault();
-    getRecipes();
-})
-
-//pick a holiday
-$(document).on("click", "h4", function (event) {
+/**************************************************************************************************  
+ADD HOLIDAY NAMES & BUTTONS EVENT LISTENERS
+**************************************************************************************************/
+//GET HOLIDAY DETAILS BY CLICKING ON HOLIDAY NAME IN LIST
+$(document).on("click", "h4", function(event) {
     calendarificURL = "https://calendarific.com/api/v2/holidays?&api_key=" + cAPIkey + "&country=" + countries[country].abbr + "&year=2021&month=" + months[month] + "&type=national,local,religious";
     var index = $(this).attr("id")
     $.ajax({
@@ -328,15 +363,48 @@ $(document).on("click", "h4", function (event) {
     })
 })
 
-//back button
-$(document).on("click", ".backBtn", function (event) {
+//BACK-TO-HOLIDAY-LIST BUTTON 
+$(document).on("click", ".backBtn", function(event) {
     event.preventDefault()
     $("#holiday-list").empty();
     getHolidays()
 })
 
-// EVENT LISTENER FOR RECIPE CARD
-$(document).on("click", "img", function (event) {
+//NEXT BUTTON "EXPLORE FOOD OPTIONS"
+$(document).on("click", ".nextBtn", function(event) {
+    event.preventDefault()
+    $("#shout2").empty();
+    $("#holiday-list").addClass("chosen");
+    $("#food-container").removeClass("hide");
+    var instructions = $("<p>").text("Now that you've chosen a holiday, let's celebrate with some cuisine from " + country + "! Choose 'Recipes' to get a list of recipes to prepare at home, or choose 'Restaurants' to find restaurants in your city.")
+    instructions.addClass("instruction-styling");
+    var recipeBtn = $("<button>").text("Recipes");
+    recipeBtn.addClass("hollow button");
+    recipeBtn.attr("id", "recipeBtn");
+    var restaurantBtn = $("<button>").text("Restaurants");
+    restaurantBtn.addClass("hollow button");
+    restaurantBtn.attr("id", "restaurantBtn");
+    $("#shout2").append(instructions);
+    $("#shout2").append(recipeBtn).append(restaurantBtn);
+    $(".nextBtn").addClass("hide");
+    $(".backBtn").addClass("hide");
+})
+
+/**************************************************************************************************  
+ADD RECIPE EVENT LISTENERS
+**************************************************************************************************/
+//RECIPE BUTTON
+$(document).on("click", "#recipeBtn", function(event) {
+    $("#recipe-list").empty();
+    $("#recipe").empty();
+    $("#restaurant-list").empty();
+    $("#cityMessage").empty();
+    event.preventDefault();
+    getRecipes();
+})
+
+//RECIPE CARD
+$(document).on("click", "img", function(event) {
     event.preventDefault()
     mealID = this.id
     $("#shout2").addClass("hide")
@@ -446,7 +514,7 @@ $(document).on("click", "img", function (event) {
     })
 })
 
-//back button two
+//BACK-TO-RECIPE-LIST BUTTON
 $(document).on("click", ".backBtnTwo", function (event) {
     event.preventDefault()
     $("#recipe-list").empty();
@@ -455,27 +523,10 @@ $(document).on("click", ".backBtnTwo", function (event) {
     getRecipes()
 })
 
-//EVENT LISTENER FOR CITY BUTTON TO SEARCH FOR RESTAURANTS
-$(document).on("click", ".cityBtn", function (event) {
-    event.preventDefault();
-    $("#cityMessage").empty();
-    cityID = $(this).attr("id");
-    $("#restaurant-list").addClass("grid-x grid-margin-x small-up-2 medium-up-3");
-    getRestaurants();
-});
-
-//EVENT LISTENER FOR CITY SEARCH BUTTON
-$("#citySearchBtn").on("click", function (event) {
-    event.preventDefault();
-    $("#restaurant-list").empty();
-    $("#cityMessage").empty();
-    city = $("#cityInput").val();
-    $("#cityInput").val("");
-    $("#restaurant-list").removeClass("grid-x grid-margin-x small-up-2 medium-up-3");
-    getCity();
-});
-
-//EVENT LISTENER FOR RESTAURANT BUTTON
+/**************************************************************************************************  
+ADD RESTAURANT & CITY EVENT LISTENERS
+**************************************************************************************************/
+//RESTAURANT BUTTON - PROMPTS USER FOR CITY TO SEARCH
 $(document).on("click", "#restaurantBtn", function (event) {
     event.preventDefault();
     $("#restaurant-list").empty();
@@ -496,7 +547,27 @@ $(document).on("click", "#restaurantBtn", function (event) {
     $("#restaurant-list").append(form);
 })
 
-//EVENT LISTENER FOR RESTAURANT SEARCH BUTTON
+//CITY SEARCH BUTTON - GETS CITY MATCHES FOR USER INPUT
+$("#citySearchBtn").on("click", function (event) {
+    event.preventDefault();
+    $("#restaurant-list").empty();
+    $("#cityMessage").empty();
+    city = $("#cityInput").val();
+    $("#cityInput").val("");
+    $("#restaurant-list").removeClass("grid-x grid-margin-x small-up-2 medium-up-3");
+    getCity();
+});
+
+//CITY BUTTON TO SEARCH FOR RESTAURANTS IN THAT CITY
+$(document).on("click", ".cityBtn", function (event) {
+    event.preventDefault();
+    $("#cityMessage").empty();
+    cityID = $(this).attr("id");
+    $("#restaurant-list").addClass("grid-x grid-margin-x small-up-2 medium-up-3");
+    getRestaurants();
+});
+
+//RESTAURANT SEARCH BUTTON
 $(document).on("click", "#restaurantSearchBtn", function (event) {
     event.preventDefault();
     city = $("#cityInput").val();
@@ -504,7 +575,7 @@ $(document).on("click", "#restaurantSearchBtn", function (event) {
     getCity();
 })
 
-//EVENT LISTENER FOR RESTAURANT CARD
+//RESTAURANT CARD
 $(document).on("click", ".rstCard", function (event) {
     event.preventDefault();
     restaurantID = $(this).attr("id");
@@ -513,7 +584,7 @@ $(document).on("click", ".rstCard", function (event) {
     getRestaurantDetails();
 })
 
-//EVENT LISTENER FOR RESTAURANT BACK BUTTON
+//RESTAURANT BACK BUTTON
 $(document).on("click", "#rstBackBtn", function (event) {
     event.preventDefault()
     $("#restaurant-list").empty();
@@ -521,39 +592,3 @@ $(document).on("click", "#rstBackBtn", function (event) {
     $("#shout2").removeClass("hide");
     getRestaurants();
 })
-
-//EVENT LISTENER FOR NEXT BUTTON "EXPLORE FOOD OPTIONS"
-$(document).on("click", ".nextBtn", function (event) {
-    event.preventDefault()
-    $("#shout2").empty();
-    $("#holiday-list").addClass("chosen");
-    $("#food-container").removeClass("hide");
-    var instructions = $("<p>").text("Now that you've chosen a holiday, let's celebrate with some food. Choose recipes to get a list of recipes to prepare at home or choose restaurants to find a restaurant in your city.")
-    instructions.addClass("instruction-styling");
-    var recipeBtn = $("<button>").text("Recipes");
-    recipeBtn.addClass("hollow button");
-    recipeBtn.attr("id", "recipeBtn");
-    var restaurantBtn = $("<button>").text("Restaurants");
-    restaurantBtn.addClass("hollow button");
-    restaurantBtn.attr("id", "restaurantBtn");
-    $("#shout2").append(instructions);
-    $("#shout2").append(recipeBtn).append(restaurantBtn);
-    $(".nextBtn").addClass("hide");
-    $(".backBtn").addClass("hide");
-})
-
-function initMap() {
-    setMap(0, 0, 2);
-}
-
-function setMap(lat, lon, zoom) {
-    var location = { lat: lat, lng: lon };
-    var map = new google.maps.Map(document.getElementById("map"), {
-        zoom: zoom,
-        center: location
-    });
-    var marker = new google.maps.Marker({
-        position: location,
-        map: map
-    });
-}
